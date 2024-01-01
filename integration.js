@@ -1,10 +1,9 @@
 'use strict';
-const { map } = require('lodash/fp');
 
 const { setLogger, getLogger } = require('./src/logger');
-const { polarityRequest } = require('./src/polarity-request');
 const { parseErrorToReadableJSON } = require('./src/errors');
-const { PolarityResult } = require('./src/create-result-object');
+
+const { polarityRequest } = require('./src/polarity-request');
 
 let Logger = null;
 
@@ -12,22 +11,48 @@ const startup = (logger) => {
   Logger = logger;
   setLogger(Logger);
 };
-/**
- * @param entities
- * @param options
- * @param cb
- * @returns {Promise<void>}
- */
 
-async function doLookup(entities, options, cb) {}
+async function doLookup(entities, options, cb) {
+  const Logger = getLogger();
 
-async function query() {}
+  polarityRequest.setOptions(options);
 
-function validateOptions(userOptions, cb) {}
+  polarityRequest.setHeader('content-type', 'application/json');
+  polarityRequest.setHeader('accept', 'application/json');
+
+  const token = await getAccessToken();
+
+  polarityRequest.setHeader('authorization', `Bearer ${token}`);
+}
+
+async function searchEntities(entities) {
+  const Logger = getLogger();
+
+  const searchResults = await Promise.all(entities.map(async (entity) => {}));
+
+  return searchResults;
+}
+
+async function getAccessToken() {
+  const response = await polarityRequest.send({
+    method: 'POST',
+    url: 'https://auth.app.wiz.io/oauth/token',
+    form: {
+      grant_type: 'client_credentials',
+      client_id: polarityRequest.options.clientId,
+      client_secret: polarityRequest.options.clientSecret,
+      audience: 'wiz-api'
+    }
+  });
+
+  Logger.trace({ token_response: response });
+
+  const accessToken = response[0].result.body.access_token;
+
+  return accessToken;
+}
 
 module.exports = {
   startup,
-  doLookup,
-  onMessage,
-  validateOptions
+  doLookup
 };
