@@ -21,6 +21,7 @@ const requestForAuth = createRequestWithDefaults({
 const requestWithDefaults = createRequestWithDefaults({
   config,
   roundedSuccessStatusCodes: [200],
+  useLimiter: true,
   requestOptionsToOmitFromLogsKeyPaths: ['authorization', 'query'],
   preprocessRequestOptions: async ({ options, query, ...requestOptions }) => {
     const token = await getToken(options);

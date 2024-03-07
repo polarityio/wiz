@@ -10,10 +10,15 @@ const { validateOptions } = require('./server/userOptions');
 const { queryIssues, queryVulnerabilities, queryAssets } = require('./server/queries');
 const assembleLookupResults = require('./server/assembleLookupResults');
 
-const doLookup = async (entities, options, cb) => {
+const doLookup = async (entities, _options, cb) => {
   const Logger = getLogger();
   try {
     Logger.debug({ entities }, 'Entities');
+    const options = {
+      ..._options,
+      maxConcurrent: 1,
+      minimumMillisecondsRequestWillTake: 350
+    };
 
     const searchableEntities = removePrivateIps(entities);
 

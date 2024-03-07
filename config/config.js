@@ -1,9 +1,11 @@
 module.exports = {
   name: 'WIZ.IO',
   acronym: 'WIZ',
-  description: 'TODO',
+  description:
+    'Search WIZ.IO for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs',
   entityTypes: ['cve', 'IPv4', 'domain'],
   defaultColor: 'light-blue',
+  onDemandOnly: true,
   styles: ['./client/styles.less'],
   block: {
     component: {

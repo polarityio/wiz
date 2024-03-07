@@ -7,7 +7,7 @@ const queryEntitiesWithQueryStringBuilder = async (
   entitiesWithIds,
   options,
   buildQueryStringWithOneEntity,
-  numberOfQueriesToRunInOneRequest = 5
+  numberOfQueriesToRunInOneRequest = 15
 ) => {
   const queries = buildAggregateQueries(
     entitiesWithIds,
