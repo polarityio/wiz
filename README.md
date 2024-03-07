@@ -1,10 +1,10 @@
-# Polarity WIZ.IO Integration
+# Polarity WIZ Integration
 
-WIZ.IO helps organizations create secure cloud environments by creating a normalizing layer between cloud environments, enabling them to rapidly identify and remove critical risks.
+WIZ helps organizations create secure cloud environments by creating a normalizing layer between cloud environments, enabling them to rapidly identify and remove critical risks.
 
-The Polarity WIZ.IO integration allows Polarity to search WIZ.IO for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs.
+The Polarity WIZ integration allows Polarity to search WIZ for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs.
 
-To learn more about WIZ.IO, visit the [official website](https://www.wiz.io/about).
+To learn more about WIZ, visit the [official website](https://www.wiz.io/about).
 
 <div style="display:flex; align-items: flex-start; justify-content:flex-start; align-items:flex-start; margin-bottom: 7px">
   <img width="350" style="margin-right:7px" alt="Integration Example Vuln" src="./assets/example-vuln.png">
@@ -14,7 +14,7 @@ To learn more about WIZ.IO, visit the [official website](https://www.wiz.io/abou
   <img width="350" style="margin-right:7px" alt="Integration Example Issue" src="./assets/example-issue.png">
 </div>
 
-## WIZ.IO Integration Options
+## WIZ Integration Options
 ### Client ID
 Your WIZ Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
 

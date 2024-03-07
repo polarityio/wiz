@@ -203,7 +203,7 @@
               {{#if issue.entity.properties.description}}
                 <div>
                   <span class="p-key">Description:</span>
-                  <span class="p-value">{{issue.entity.properties.description}}</span>
+                  <span class="p-value p-block">{{issue.entity.properties.description}}</span>
                 </div>
               {{/if}}
               {{#if issue.entity.properties.remediation}}
@@ -226,7 +226,7 @@
               {{/if}}
               {{#if issue.entity.firstSeen}}
                 <div>
-                  <span class="p-key">Fix Date:</span>
+                  <span class="p-key">First Seen:</span>
                   <span class="p-value">{{moment-format
                       issue.entity.firstSeen
                       "MM/DD/YYYY HH:mm:ss"
@@ -236,7 +236,7 @@
               {{/if}}
               {{#if issue.entity.lastSeen}}
                 <div>
-                  <span class="p-key">Updated At:</span>
+                  <span class="p-key">Last Seen:</span>
                   <span class="p-value">{{moment-format
                       issue.entity.lastSeen
                       "MM/DD/YYYY HH:mm:ss"
@@ -303,7 +303,7 @@
                   {{#if project.description}}
                     <div>
                       <span class="p-key">Description:</span>
-                      <span class="p-value">{{project.description}}</span>
+                      <span class="p-value p-block">{{project.description}}</span>
                     </div>
                   {{/if}}
                   {{#if project.businessUnit}}
@@ -348,13 +348,13 @@
       <div class="mb-3">
         <div class="mb-1">
           <h1 class="p-title">
-            {{fa-icon icon="info" class="info" fixedWidth=true}}
+            {{fa-icon icon="bug" class="bug" fixedWidth=true}}
             Vulnerability
           </h1>
           {{#if vulnerability.portalUrl}}
             <div>
               <a href={{vulnerability.portalUrl}}>
-                View Vulnerability in WIZ.IO
+                View Vulnerability in WIZ
                 {{fa-icon "external-link" fixedWidth=true class="external-icon"}}
               </a>
             </div>
@@ -494,7 +494,7 @@
                   {{#if project.description}}
                     <div>
                       <span class="p-key">Description:</span>
-                      <span class="p-value">{{project.description}}</span>
+                      <span class="p-value p-block">{{project.description}}</span>
                     </div>
                   {{/if}}
                   {{#if project.businessUnit}}
@@ -620,7 +620,7 @@
       <div class="mb-3">
         <div class="mb-1">
           <h1 class="p-title">
-            {{fa-icon icon="info" class="info" fixedWidth=true}}
+            {{fa-icon icon="tv" class="tv" fixedWidth=true}}
             Asset
           </h1>
           {{#if (or asset.graphEntity.name asset.name)}}
@@ -782,7 +782,7 @@
                   {{#if project.description}}
                     <div>
                       <span class="p-key">Description:</span>
-                      <span class="p-value">{{project.description}}</span>
+                      <span class="p-value p-block">{{project.description}}</span>
                     </div>
                   {{/if}}
                   {{#if project.businessUnit}}
@@ -844,7 +844,7 @@
                   {{#if technology.description}}
                     <div>
                       <span class="p-key">Description:</span>
-                      <span class="p-value">{{technology.description}}</span>
+                      <span class="p-value p-block">{{technology.description}}</span>
                     </div>
                   {{/if}}
                   {{#if technology.risk}}

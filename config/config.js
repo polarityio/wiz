@@ -1,8 +1,8 @@
 module.exports = {
-  name: 'WIZ.IO',
+  name: 'WIZ',
   acronym: 'WIZ',
   description:
-    'Search WIZ.IO for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs',
+    'Search WIZ for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs',
   entityTypes: ['cve', 'IPv4', 'domain'],
   defaultColor: 'light-blue',
   onDemandOnly: true,
@@ -43,6 +43,22 @@ module.exports = {
         'Your WIZ Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
       default: '',
       type: 'password',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'apiRegion',
+      name: 'API Region',
+      description: 'The region where the API User resides',
+      default: { display: 'us1', value: 'us1' },
+      options: [
+        { display: 'us1', value: 'us1' },
+        { display: 'us2', value: 'us2' },
+        { display: 'eu1', value: 'eu1' },
+        { display: 'eu2', value: 'eu2' },
+        { display: 'us17 (Demo Server)', value: 'us17' }
+      ],
+      type: 'select',
       userCanEdit: false,
       adminOnly: true
     }

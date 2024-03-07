@@ -23,12 +23,12 @@ const requestWithDefaults = createRequestWithDefaults({
   roundedSuccessStatusCodes: [200],
   useLimiter: true,
   requestOptionsToOmitFromLogsKeyPaths: ['authorization', 'query'],
-  preprocessRequestOptions: async ({ options, query, ...requestOptions }) => {
+  preprocessRequestOptions: async ({ options, query }) => {
     const token = await getToken(options);
 
     return {
       method: 'POST',
-      url: 'https://api.us17.app.wiz.io/graphql',
+      url: `https://api.${options.apiRegion.value}.app.wiz.io/graphql`,
       headers: {
         accept: 'application/json',
         authorization: `Bearer ${token}`,
