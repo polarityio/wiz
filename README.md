@@ -1,6 +1,11 @@
 # Polarity Wiz Integration
 
-<img src="images/overlay.png" width="50%">
+TODO
+
+To learn more about LogScale, visit the [official website](TODO).
+
+
+## Wiz Integration Options
 
 ## Installation Instructions
 

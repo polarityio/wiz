@@ -1,7 +1,18 @@
 module.exports = {
-  name: 'Wiz',
+  name: 'WIZ.IO',
   acronym: 'WIZ',
-  description: 'Wiz integration',
+  description: 'TODO',
+  entityTypes: ['cve', 'IPv4', 'domain'],
+  defaultColor: 'light-blue',
+  styles: ['./client/styles.less'],
+  block: {
+    component: {
+      file: './client/block.js'
+    },
+    template: {
+      file: './client/block.hbs'
+    }
+  },
   request: {
     cert: '',
     key: '',
@@ -9,18 +20,29 @@ module.exports = {
     ca: '',
     proxy: ''
   },
-  logging: { level: 'info' },
-  entityTypes: ['*'],
-  onDemandOnly: true,
-  defaultColor: 'light-blue',
-  styles: ['./styles/styles.less'],
-  block: {
-    component: {
-      file: './components/component.js'
-    },
-    template: {
-      file: './templates/template.hbs'
-    }
+  logging: {
+    level: 'info'
   },
-  options: []
+  options: [
+    {
+      key: 'clientId',
+      name: 'Client ID',
+      description:
+        'Your WIZ Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
+      default: '',
+      type: 'text',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'clientSecret',
+      name: 'Client Secret',
+      description:
+        'Your WIZ Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
+      default: '',
+      type: 'password',
+      userCanEdit: false,
+      adminOnly: true
+    }
+  ]
 };

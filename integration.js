@@ -1,58 +1,56 @@
 'use strict';
+const {
+  logging: { setLogger, getLogger },
+  errors: { parseErrorToReadableJson }
+} = require('polarity-integration-utils');
 
-const { setLogger, getLogger } = require('./src/logger');
-const { parseErrorToReadableJSON } = require('./src/errors');
+const { removePrivateIps, getEntityTypes, addIdsToEntities } = require('./server/dataTransformations');
 
-const { polarityRequest } = require('./src/polarity-request');
+const { validateOptions } = require('./server/userOptions');
+const { queryIssues, queryVulnerabilities, queryAssets } = require('./server/queries');
+const assembleLookupResults = require('./server/assembleLookupResults');
 
-let Logger = null;
+const doLookup = async (entities, options, cb) => {
+  const Logger = getLogger();
+  try {
+    Logger.debug({ entities }, 'Entities');
 
-const startup = (logger) => {
-  Logger = logger;
-  setLogger(Logger);
+    const searchableEntities = removePrivateIps(entities);
+
+    const entitiesWithIds = addIdsToEntities(searchableEntities);
+
+    const cveEntities = getEntityTypes('cve', entitiesWithIds);
+
+    const [ issues, vulnerabilities, assets ] = await Promise.all([
+      queryIssues(cveEntities, options),
+      queryVulnerabilities(cveEntities, options),
+      queryAssets(entitiesWithIds, options)
+    ]);
+
+    Logger.trace({ issues, vulnerabilities, assets });
+
+    const lookupResults = assembleLookupResults(
+      entities,
+      issues,
+      vulnerabilities,
+      assets,
+      options
+    );
+
+
+    Logger.trace({ lookupResults }, 'Lookup Results');
+
+    cb(null, lookupResults);
+  } catch (error) {
+    const err = parseErrorToReadableJson(error);
+
+    Logger.error({ error, formattedError: err }, 'Get Lookup Results Failed');
+    cb({ detail: error.message || 'Lookup Failed', err });
+  }
 };
 
-async function doLookup(entities, options, cb) {
-  const Logger = getLogger();
-
-  polarityRequest.setOptions(options);
-
-  polarityRequest.setHeader('content-type', 'application/json');
-  polarityRequest.setHeader('accept', 'application/json');
-
-  const token = await getAccessToken();
-
-  polarityRequest.setHeader('authorization', `Bearer ${token}`);
-}
-
-async function searchEntities(entities) {
-  const Logger = getLogger();
-
-  const searchResults = await Promise.all(entities.map(async (entity) => {}));
-
-  return searchResults;
-}
-
-async function getAccessToken() {
-  const response = await polarityRequest.send({
-    method: 'POST',
-    url: 'https://auth.app.wiz.io/oauth/token',
-    form: {
-      grant_type: 'client_credentials',
-      client_id: polarityRequest.options.clientId,
-      client_secret: polarityRequest.options.clientSecret,
-      audience: 'wiz-api'
-    }
-  });
-
-  Logger.trace({ token_response: response });
-
-  const accessToken = response[0].result.body.access_token;
-
-  return accessToken;
-}
-
 module.exports = {
-  startup,
+  startup: setLogger,
+  validateOptions,
   doLookup
 };

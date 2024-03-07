@@ -1,0 +1,885 @@
+<ul class="nav nav-tabs mt-2">
+  {{#if issues}}
+    <li class="nav-item">
+      <a
+        {{action "changeTab" "issues"}}
+        class="nav-link {{if (eq activeTab 'issues') 'active'}}"
+      >Issues</a>
+    </li>
+  {{/if}}
+  {{#if vulnerabilities}}
+    <li class="nav-item">
+      <a
+        {{action "changeTab" "vulnerabilities"}}
+        class="nav-link {{if (eq activeTab 'vulnerabilities') 'active'}}"
+      >Vulnerabilities</a>
+    </li>
+  {{/if}}
+  {{#if assets}}
+    <li class="nav-item">
+      <a
+        {{action "changeTab" "assets"}}
+        class="nav-link {{if (eq activeTab 'assets') 'active'}}"
+      >Assets</a>
+    </li>
+  {{/if}}
+</ul>
+<div class="results">
+  {{#if (eq activeTab "issues")}}
+    {{#each issues as |issue index|}}
+      <div class="mb-3">
+        <div class="mb-1">
+          <h1 class="p-title">
+            {{fa-icon icon="info" class="info" fixedWidth=true}}
+            Issue
+          </h1>
+          {{#if issue.description}}
+            <div>
+              <span class="p-key">Description:</span>
+              <span class="p-value p-block">{{issue.description}}</span>
+            </div>
+          {{/if}}
+          {{#if issue.type}}
+            <div>
+              <span class="p-key">Type:</span>
+              <span class="p-value">{{titleize (humanize (dasherize issue.type))}}</span>
+            </div>
+          {{/if}}
+          {{#if issue.status}}
+            <div>
+              <span class="p-key">Status:</span>
+              <span class="p-value">{{titleize
+                  (humanize (dasherize issue.status))
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.severity}}
+            <div>
+              <span class="p-key">Severity:</span>
+              <span class="p-value">{{titleize
+                  (humanize (dasherize issue.severity))
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.openReason}}
+            <div>
+              <span class="p-key">Open Reason:</span>
+              <span class="p-value">{{titleize
+                  (humanize (dasherize issue.openReason))
+                }}</span>
+            </div>
+          {{/if}}
+
+          {{#if issue.createdAt}}
+            <div>
+              <span class="p-key">Created At:</span>
+              <span class="p-value">{{moment-format
+                  issue.createdAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.updatedAt}}
+            <div>
+              <span class="p-key">Updated At:</span>
+              <span class="p-value">{{moment-format
+                  issue.updatedAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.dueAt}}
+            <div>
+              <span class="p-key">Due At:</span>
+              <span class="p-value">{{moment-format
+                  issue.dueAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.resolvedAt}}
+            <div>
+              <span class="p-key">Resolved At:</span>
+              <span class="p-value">{{moment-format
+                  issue.resolvedAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.statusChangedAt}}
+            <div>
+              <span class="p-key">Status Changed At:</span>
+              <span class="p-value">{{moment-format
+                  issue.statusChangedAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if issue.rejectionExpiredAt}}
+            <div>
+              <span class="p-key">Rejection Expired At:</span>
+              <span class="p-value">{{moment-format
+                  issue.rejectionExpiredAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+        </div>
+
+        {{#if (or issue.entity issue.entitySnapshot)}}
+          {{#if (get expandableTitleStates (concat "issuesEntity" index))}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "issuesEntity" index))
+              }}
+            >
+              <span class="text">Related Entity</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#if (or issue.entity.name issue.entitySnapshot.name)}}
+                <div>
+                  <span class="p-key">Name:</span>
+                  <span class="p-value p-block">{{or
+                      issue.entity.name
+                      issue.entitySnapshot.name
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if (or issue.entity.type issue.entitySnapshot.type)}}
+                <div>
+                  <span class="p-key">Type:</span>
+                  <span class="p-value p-block">{{titleize
+                      (humanize
+                        (dasherize (or issue.entity.type issue.entitySnapshot.type))
+                      )
+                    }}
+                    {{#if issue.entity.type}}
+                      {{issue.entity.type}}
+                    {{/if}}
+                  </span>
+                </div>
+              {{/if}}
+              {{#if issue.entitySnapshot.status}}
+                <div>
+                  <span class="p-key">Status:</span>
+                  <span class="p-value">{{titleize
+                      (humanize (dasherize issue.entitySnapshot.status))
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.severity}}
+                <div>
+                  <span class="p-key">Severity:</span>
+                  <span class="p-value">{{titleize
+                      (humanize (dasherize issue.entity.properties.severity))
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.weightedSeverity}}
+                <div>
+                  <span class="p-key">Weighted Severity:</span>
+                  <span class="p-value">{{titleize
+                      (humanize (dasherize issue.entity.properties.weightedSeverity))
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.detectionMethod}}
+                <div>
+                  <span class="p-key">Detection Method:</span>
+                  <span class="p-value">{{titleize
+                      (humanize (dasherize issue.entity.properties.detectionMethod))
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.description}}
+                <div>
+                  <span class="p-key">Description:</span>
+                  <span class="p-value">{{issue.entity.properties.description}}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.remediation}}
+                <div>
+                  <span class="p-key">Remediation:</span>
+                  <span class="p-value">{{issue.entity.properties.remediation}}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.dataSourceLink}}
+                <div>
+                  <span class="p-key">Source Link:</span>
+                  <span class="p-value">{{issue.entity.properties.dataSourceLink}}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.exploitLink}}
+                <div>
+                  <span class="p-key">Exploit Link:</span>
+                  <span class="p-value">{{issue.entity.properties.exploitLink}}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.firstSeen}}
+                <div>
+                  <span class="p-key">Fix Date:</span>
+                  <span class="p-value">{{moment-format
+                      issue.entity.firstSeen
+                      "MM/DD/YYYY HH:mm:ss"
+                      timeZone=timezone
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.lastSeen}}
+                <div>
+                  <span class="p-key">Updated At:</span>
+                  <span class="p-value">{{moment-format
+                      issue.entity.lastSeen
+                      "MM/DD/YYYY HH:mm:ss"
+                      timeZone=timezone
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.fixDate}}
+                <div>
+                  <span class="p-key">Fix Date:</span>
+                  <span class="p-value">{{moment-format
+                      issue.entity.properties.fixDate
+                      "MM/DD/YYYY HH:mm:ss"
+                      timeZone=timezone
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if issue.entity.properties.updatedAt}}
+                <div>
+                  <span class="p-key">Updated At:</span>
+                  <span class="p-value">{{moment-format
+                      issue.entity.properties.updatedAt
+                      "MM/DD/YYYY HH:mm:ss"
+                      timeZone=timezone
+                    }}</span>
+                </div>
+              {{/if}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "issuesEntity" index))
+              }}
+            >
+              <span class="text">Related Entity</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+
+        {{#if issue.projects.length}}
+          {{#if (get expandableTitleStates (concat "issueProjects" index))}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "issueProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#each issue.projects as |project|}}
+                <div class="mb-1">
+                  {{#if project.name}}
+                    <div>
+                      <span class="p-key">Name:</span>
+                      <span class="p-value">{{project.name}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.description}}
+                    <div>
+                      <span class="p-key">Description:</span>
+                      <span class="p-value">{{project.description}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.businessUnit}}
+                    <div>
+                      <span class="p-key">Business Unit:</span>
+                      <span class="p-value">{{project.businessUnit}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.businessImpact}}
+                    <div>
+                      <span class="p-key">Business Impact:</span>
+                      <span class="p-value">{{project.riskProfile.businessImpact}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.hasExposedAPI}}
+                    <div>
+                      <span class="p-key">Has Exposed API:</span>
+                      <span class="p-value">{{project.riskProfile.hasExposedAPI}}</span>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "issueProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/each}}
+  {{/if}}
+  {{#if (eq activeTab "vulnerabilities")}}
+    {{#each vulnerabilities as |vulnerability index|}}
+      <div class="mb-3">
+        <div class="mb-1">
+          <h1 class="p-title">
+            {{fa-icon icon="info" class="info" fixedWidth=true}}
+            Vulnerability
+          </h1>
+          {{#if vulnerability.portalUrl}}
+            <div>
+              <a href={{vulnerability.portalUrl}}>
+                View Vulnerability in WIZ.IO
+                {{fa-icon "external-link" fixedWidth=true class="external-icon"}}
+              </a>
+            </div>
+          {{/if}}
+          {{#if vulnerability.link}}
+            <div>
+              <a href={{vulnerability.link}}>
+                View Vulnerability Info
+                {{fa-icon "external-link" fixedWidth=true class="external-icon"}}
+              </a>
+            </div>
+          {{/if}}
+          {{#if vulnerability.name}}
+            <div class="mt-1">
+              <span class="p-key">Name:</span>
+              <span class="p-value">{{vulnerability.name}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.description}}
+            <div>
+              <span class="p-key">Description:</span>
+              <span class="p-value p-block">{{vulnerability.description}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.CVEDescription}}
+            <div>
+              <span class="p-key">CVE Description:</span>
+              <span class="p-value p-block">{{vulnerability.CVEDescription}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.status}}
+            <div>
+              <span class="p-key">Status:</span>
+              <span class="p-value">{{vulnerability.status}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.vendorSeverity}}
+            <div>
+              <span class="p-key">Severity:</span>
+              <span class="p-value">{{vulnerability.vendorSeverity}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.CVSSSeverity}}
+            <div>
+              <span class="p-key">CVSS Severity:</span>
+              <span class="p-value">{{vulnerability.CVSSSeverity}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.detectionMethod}}
+            <div>
+              <span class="p-key">Detection Method:</span>
+              <span class="p-value">{{vulnerability.detectionMethod}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.score}}
+            <div>
+              <span class="p-key">Score:</span>
+              <span class="p-value">{{vulnerability.score}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.exploitabilityScore}}
+            <div>
+              <span class="p-key">Exploitability Score:</span>
+              <span class="p-value">{{vulnerability.exploitabilityScore}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.impactScore}}
+            <div>
+              <span class="p-key">Impact Score:</span>
+              <span class="p-value">{{vulnerability.impactScore}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.epssPercentile}}
+            <div>
+              <span class="p-key">EPSS Percentile:</span>
+              <span class="p-value">{{vulnerability.epssPercentile}}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.epssProbability}}
+            <div>
+              <span class="p-key">EPSS Probability:</span>
+              <span class="p-value">{{vulnerability.epssProbability}}</span>
+            </div>
+          {{/if}}
+          {{#if
+            (or (eq vulnerability.hasExploit true) (eq vulnerability.hasExploit false))
+          }}
+            <div>
+              <span class="p-key">Has Exploit:</span>
+              <span class="p-value">{{if vulnerability.hasExploit "Yes" "No"}}</span>
+            </div>
+          {{/if}}
+
+          {{#if vulnerability.firstDetectedAt}}
+            <div>
+              <span class="p-key">First Detected At:</span>
+              <span class="p-value">{{moment-format
+                  vulnerability.firstDetectedAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if vulnerability.lastDetectedAt}}
+            <div>
+              <span class="p-key">Last Detected At:</span>
+              <span class="p-value">{{moment-format
+                  vulnerability.lastDetectedAt
+                  "MM/DD/YYYY HH:mm:ss"
+                  timeZone=timezone
+                }}</span>
+            </div>
+          {{/if}}
+        </div>
+
+        {{#if vulnerability.projects.length}}
+          {{#if (get expandableTitleStates (concat "vulnProjects" index))}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "vulnProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#each vulnerability.projects as |project|}}
+                <div class="mb-1">
+                  {{#if project.name}}
+                    <div>
+                      <span class="p-key">Name:</span>
+                      <span class="p-value">{{project.name}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.description}}
+                    <div>
+                      <span class="p-key">Description:</span>
+                      <span class="p-value">{{project.description}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.businessUnit}}
+                    <div>
+                      <span class="p-key">Business Unit:</span>
+                      <span class="p-value">{{project.businessUnit}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.businessImpact}}
+                    <div>
+                      <span class="p-key">Business Impact:</span>
+                      <span class="p-value">{{project.riskProfile.businessImpact}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.hasExposedAPI}}
+                    <div>
+                      <span class="p-key">Has Exposed API:</span>
+                      <span class="p-value">{{project.riskProfile.hasExposedAPI}}</span>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "vulnProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+
+        {{#if vulnerability.vulnerableAsset}}
+          {{#if (get expandableTitleStates (concat "vulnAsset" index))}}
+            <a
+              class="expandable-title"
+              {{on "click" (action "toggleExpandableTitle" (concat "vulnAsset" index))}}
+            >
+              <span class="text">Related Asset</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#if vulnerability.vulnerableAsset.name}}
+                <div>
+                  <span class="p-key">Name:</span>
+                  <span class="p-value">{{vulnerability.vulnerableAsset.name}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.type}}
+                <div>
+                  <span class="p-key">Type:</span>
+                  <span class="p-value">{{titleize
+                      (humanize (dasherize vulnerability.vulnerableAsset.type))
+                    }}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.status}}
+                <div>
+                  <span class="p-key">Status:</span>
+                  <span class="p-value">{{vulnerability.vulnerableAsset.status}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.region}}
+                <div>
+                  <span class="p-key">Region:</span>
+                  <span class="p-value">{{vulnerability.vulnerableAsset.region}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.subscriptionName}}
+                <div>
+                  <span class="p-key">Subscription Name:</span>
+                  <span
+                    class="p-value"
+                  >{{vulnerability.vulnerableAsset.subscriptionName}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.cloudPlatform}}
+                <div>
+                  <span class="p-key">Cloud Platform:</span>
+                  <span
+                    class="p-value"
+                  >{{vulnerability.vulnerableAsset.cloudPlatform}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.cloudProviderURL}}
+                <div>
+                  <span class="p-key">Cloud Provider URL:</span>
+                  <span
+                    class="p-value"
+                  >{{vulnerability.vulnerableAsset.cloudProviderURL}}</span>
+                </div>
+              {{/if}}
+              {{#if vulnerability.vulnerableAsset.ipAddresses}}
+                <div>
+                  <span class="p-key">IP Addresses:</span>
+                  <span class="p-value">{{join
+                      ", "
+                      vulnerability.vulnerableAsset.ipAddresses
+                    }}</span>
+                </div>
+              {{/if}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on "click" (action "toggleExpandableTitle" (concat "vulnAsset" index))}}
+            >
+              <span class="text">Related Asset</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/each}}
+  {{/if}}
+  {{#if (eq activeTab "assets")}}
+    {{#each assets as |asset index|}}
+      <div class="mb-3">
+        <div class="mb-1">
+          <h1 class="p-title">
+            {{fa-icon icon="info" class="info" fixedWidth=true}}
+            Asset
+          </h1>
+          {{#if (or asset.graphEntity.name asset.name)}}
+            <div>
+              <span class="p-key">Name:</span>
+              <span class="p-value">{{or asset.graphEntity.name asset.name}}</span>
+            </div>
+          {{/if}}
+          {{#if (or asset.graphEntity.type asset.type)}}
+            <div>
+              <span class="p-key">Type:</span>
+              <span class="p-value">{{titleize
+                  (humanize (dasherize (or asset.graphEntity.type asset.type)))
+                }}</span>
+            </div>
+          {{/if}}
+          {{#if asset.subscriptionName}}
+            <div>
+              <span class="p-key">Subscription Name:</span>
+              <span class="p-value">{{asset.subscriptionName}}</span>
+            </div>
+          {{/if}}
+
+          {{#if asset.graphEntity}}
+            {{#if asset.graphEntity.properties}}
+              <div>
+                {{#if asset.graphEntity.properties.status}}
+                  <div>
+                    <span class="p-key">Status:</span>
+                    <span class="p-value">{{asset.graphEntity.properties.status}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.nativeType}}
+                  <div>
+                    <span class="p-key">Native Type:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.nativeType}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.architecture}}
+                  <div>
+                    <span class="p-key">Architecture:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.architecture}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.cloudPlatform}}
+                  <div>
+                    <span class="p-key">Cloud Platform:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.cloudPlatform}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.cloudProviderURL}}
+                  <div>
+                    <span class="p-key">Cloud Provider URL:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.cloudProviderURL}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.digest}}
+                  <div>
+                    <span class="p-key">Digest:</span>
+                    <span class="p-value">{{asset.graphEntity.properties.digest}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties._environments}}
+                  <div>
+                    <span class="p-key">Environments:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties._environments}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.address}}
+                  <div>
+                    <span class="p-key">Address:</span>
+                    <span class="p-value">{{asset.graphEntity.properties.address}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.addressType}}
+                  <div>
+                    <span class="p-key">Address Type:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.addressType}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.cidr}}
+                  <div>
+                    <span class="p-key">CIDR:</span>
+                    <span class="p-value">{{asset.graphEntity.properties.cidr}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.startAddr}}
+                  <div>
+                    <span class="p-key">Start Address:</span>
+                    <span
+                      class="p-value"
+                    >{{asset.graphEntity.properties.startAddr}}</span>
+                  </div>
+                {{/if}}
+                {{#if asset.graphEntity.properties.endAddr}}
+                  <div>
+                    <span class="p-key">End Address:</span>
+                    <span class="p-value">{{asset.graphEntity.properties.endAddr}}</span>
+                  </div>
+                {{/if}}
+              </div>
+            {{/if}}
+            {{#if asset.graphEntity.firstSeen}}
+              <div>
+                <span class="p-key">First Seen:</span>
+                <span class="p-value">{{moment-format
+                    asset.graphEntity.firstSeen
+                    "MM/DD/YYYY HH:mm:ss"
+                    timeZone=timezone
+                  }}</span>
+              </div>
+            {{/if}}
+            {{#if asset.graphEntity.lastSeen}}
+              <div>
+                <span class="p-key">Last Seen:</span>
+                <span class="p-value">{{moment-format
+                    asset.graphEntity.lastSeen
+                    "MM/DD/YYYY HH:mm:ss"
+                    timeZone=timezone
+                  }}</span>
+              </div>
+            {{/if}}
+          {{/if}}
+        </div>
+
+        {{#if asset.graphEntity.projects.length}}
+          {{#if (get expandableTitleStates (concat "assetProjects" index))}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "assetProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#each asset.graphEntity.projects as |project|}}
+                <div class="mb-1">
+                  {{#if project.name}}
+                    <div>
+                      <span class="p-key">Name:</span>
+                      <span class="p-value">{{project.name}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.description}}
+                    <div>
+                      <span class="p-key">Description:</span>
+                      <span class="p-value">{{project.description}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.businessUnit}}
+                    <div>
+                      <span class="p-key">Business Unit:</span>
+                      <span class="p-value">{{project.businessUnit}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.businessImpact}}
+                    <div>
+                      <span class="p-key">Business Impact:</span>
+                      <span class="p-value">{{project.riskProfile.businessImpact}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if project.riskProfile.hasExposedAPI}}
+                    <div>
+                      <span class="p-key">Has Exposed API:</span>
+                      <span class="p-value">{{project.riskProfile.hasExposedAPI}}</span>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "assetProjects" index))
+              }}
+            >
+              <span class="text">Related Projects</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+
+        {{#if asset.graphEntity.technologies.length}}
+          {{#if (get expandableTitleStates (concat "assetTechnologies" index))}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "assetTechnologies" index))
+              }}
+            >
+              <span class="text">Related Technologies</span>
+              {{fa-icon icon="angle-up"}}
+            </a>
+            <div class="ml-2">
+              {{#each asset.graphEntity.technologies as |technology|}}
+                <div class="mb-1">
+                  {{#if technology.name}}
+                    <div>
+                      <span class="p-key">Name:</span>
+                      <span class="p-value">{{technology.name}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if technology.description}}
+                    <div>
+                      <span class="p-key">Description:</span>
+                      <span class="p-value">{{technology.description}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if technology.risk}}
+                    <div>
+                      <span class="p-key">Risk:</span>
+                      <span class="p-value">{{technology.risk}}</span>
+                    </div>
+                  {{/if}}
+                  {{#if technology.propertySections.length}}
+                    {{#each technology.propertySections as |propertySection|}}
+                      {{#each propertySection.properties as |property|}}
+                        <div>
+                          <span class="p-key">{{property.name}}:</span>
+                          <span class="p-value">{{property.value}}</span>
+                        </div>
+                      {{/each}}
+                    {{/each}}
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          {{else}}
+            <a
+              class="expandable-title"
+              {{on
+                "click"
+                (action "toggleExpandableTitle" (concat "assetTechnologies" index))
+              }}
+            >
+              <span class="text">Related Technologies</span>
+              {{fa-icon icon="angle-down"}}
+            </a>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
