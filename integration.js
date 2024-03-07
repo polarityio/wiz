@@ -4,7 +4,11 @@ const {
   errors: { parseErrorToReadableJson }
 } = require('polarity-integration-utils');
 
-const { removePrivateIps, getEntityTypes, addIdsToEntities } = require('./server/dataTransformations');
+const {
+  removePrivateIps,
+  getEntityTypes,
+  addIdsToEntities
+} = require('./server/dataTransformations');
 
 const { validateOptions } = require('./server/userOptions');
 const { queryIssues, queryVulnerabilities, queryAssets } = require('./server/queries');
@@ -14,6 +18,7 @@ const doLookup = async (entities, _options, cb) => {
   const Logger = getLogger();
   try {
     Logger.debug({ entities }, 'Entities');
+    
     const options = {
       ..._options,
       maxConcurrent: 1,
@@ -26,7 +31,7 @@ const doLookup = async (entities, _options, cb) => {
 
     const cveEntities = getEntityTypes('cve', entitiesWithIds);
 
-    const [ issues, vulnerabilities, assets ] = await Promise.all([
+    const [issues, vulnerabilities, assets] = await Promise.all([
       queryIssues(cveEntities, options),
       queryVulnerabilities(cveEntities, options),
       queryAssets(entitiesWithIds, options)
@@ -41,7 +46,6 @@ const doLookup = async (entities, _options, cb) => {
       assets,
       options
     );
-
 
     Logger.trace({ lookupResults }, 'Lookup Results');
 
