@@ -1,4 +1,5 @@
 {
+  "polarityIntegrationUuid": "2b002b50-dca5-11ee-b860-53c490e6f005",
   "name": "WIZ.IO",
   "acronym": "WIZ",
   "description": "Search WIZ.IO for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
