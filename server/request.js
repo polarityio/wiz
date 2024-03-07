@@ -45,7 +45,12 @@ const requestWithDefaults = createRequestWithDefaults({
     */
     ...response,
     body: JSON.parse(response.body)
-  })
+  }),
+  postprocessRequestFailure: (error) => {
+    error.message = `${error.message} - (${error.status}) | ${error.description}`;
+
+    throw error;
+  }
 });
 
 const getToken = async (options) => {
