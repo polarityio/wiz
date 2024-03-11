@@ -1,8 +1,8 @@
 module.exports = {
-  name: 'WIZ',
+  name: 'Wiz',
   acronym: 'WIZ',
   description:
-    'Search WIZ for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs',
+    'Search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs',
   entityTypes: ['cve', 'IPv4', 'domain'],
   defaultColor: 'light-blue',
   onDemandOnly: true,
@@ -30,7 +30,7 @@ module.exports = {
       key: 'clientId',
       name: 'Client ID',
       description:
-        'Your WIZ Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
+        'Your Wiz Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
       default: '',
       type: 'text',
       userCanEdit: false,
@@ -40,7 +40,7 @@ module.exports = {
       key: 'clientSecret',
       name: 'Client Secret',
       description:
-        'Your WIZ Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
+        'Your Wiz Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup',
       default: '',
       type: 'password',
       userCanEdit: false,

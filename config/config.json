@@ -1,8 +1,8 @@
 {
   "polarityIntegrationUuid": "2b002b50-dca5-11ee-b860-53c490e6f005",
-  "name": "WIZ",
+  "name": "Wiz",
   "acronym": "WIZ",
-  "description": "Search WIZ for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
+  "description": "Search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
   "entityTypes": ["cve", "IPv4", "domain"],
   "defaultColor": "light-blue",
   "onDemandOnly": true,
@@ -29,7 +29,7 @@
     {
       "key": "clientId",
       "name": "Client ID",
-      "description": "Your WIZ Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
+      "description": "Your Wiz Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
       "default": "",
       "type": "text",
       "userCanEdit": false,
@@ -38,7 +38,7 @@
     {
       "key": "clientSecret",
       "name": "Client Secret",
-      "description": "Your WIZ Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
+      "description": "Your Wiz Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
       "default": "",
       "type": "password",
       "userCanEdit": false,

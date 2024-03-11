@@ -1,10 +1,10 @@
-# Polarity WIZ Integration
+# Polarity Wiz Integration
 
-WIZ helps organizations create secure cloud environments by creating a normalizing layer between cloud environments, enabling them to rapidly identify and remove critical risks.
+Wiz helps organizations create secure cloud environments by creating a normalizing layer between cloud environments, enabling them to rapidly identify and remove critical risks.
 
-The Polarity WIZ integration allows Polarity to search WIZ for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs.
+The Polarity Wiz integration allows Polarity to search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs.
 
-To learn more about WIZ, visit the [official website](https://www.wiz.io/about).
+To learn more about Wiz, visit the [official website](https://www.wiz.io/about).
 
 <div style="display:flex; align-items: flex-start; justify-content:flex-start; align-items:flex-start; margin-bottom: 7px">
   <img width="350" style="margin-right:7px" alt="Integration Example Vuln" src="./assets/example-vuln.png">
@@ -14,12 +14,12 @@ To learn more about WIZ, visit the [official website](https://www.wiz.io/about).
   <img width="350" style="margin-right:7px" alt="Integration Example Issue" src="./assets/example-issue.png">
 </div>
 
-## WIZ Integration Options
+## Wiz Integration Options
 ### Client ID
-Your WIZ Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
+Your Wiz Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
 
 ### Client Secret
-Your WIZ Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
+Your Wiz Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
 
 
 ## Installation Instructions
