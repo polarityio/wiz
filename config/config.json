@@ -1,0 +1,64 @@
+{
+  "polarityIntegrationUuid": "2b002b50-dca5-11ee-b860-53c490e6f005",
+  "name": "Wiz",
+  "acronym": "WIZ",
+  "description": "Search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
+  "entityTypes": ["cve", "IPv4", "domain"],
+  "defaultColor": "light-blue",
+  "onDemandOnly": true,
+  "styles": ["./client/styles.less"],
+  "block": {
+    "component": {
+      "file": "./client/block.js"
+    },
+    "template": {
+      "file": "./client/block.hbs"
+    }
+  },
+  "request": {
+    "cert": "",
+    "key": "",
+    "passphrase": "",
+    "ca": "",
+    "proxy": ""
+  },
+  "logging": {
+    "level": "info"
+  },
+  "options": [
+    {
+      "key": "clientId",
+      "name": "Client ID",
+      "description": "Your Wiz Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
+      "default": "",
+      "type": "text",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "clientSecret",
+      "name": "Client Secret",
+      "description": "Your Wiz Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup",
+      "default": "",
+      "type": "password",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "apiRegion",
+      "name": "API Region",
+      "description": "The region where the API User resides",
+      "default": { "display": "us1", "value": "us1"},
+      "options": [
+        { "display": "us1", "value": "us1" },
+        { "display": "us2", "value": "us2" },
+        { "display": "eu1", "value": "eu1" },
+        { "display": "eu2", "value": "eu2" },
+        { "display": "us17 (Demo Server)", "value": "us17" }
+      ],
+      "type": "select",
+      "userCanEdit": false,
+      "adminOnly": true
+    }
+  ]
+}
