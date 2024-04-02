@@ -15,11 +15,17 @@ To learn more about Wiz, visit the [official website](https://www.wiz.io/about).
 </div>
 
 ## Wiz Integration Options
+### Authentication Token Domain
+The Domain used to obtain your WIZ Authentication Token
+
+### API Region
+The region where the API User resides.  (e.g. us1, us2, eu1, eu2 ...)
+
 ### Client ID
-Your Wiz Client ID. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
+Your Wiz Client ID
 
 ### Client Secret
-Your Wiz Client Secret. Obtain yours here: https://partners.wiz.io/prm/english/c/Integration-API-Signup
+Your Wiz Client Secret
 
 
 ## Installation Instructions
