@@ -39,7 +39,7 @@ module.exports = {
       key: 'apiRegion',
       name: 'API Region',
       description:
-        'The region where the API User resides.  (e.g. us1, us2, eu1, eu2 ...)',
+        'The region where the API User resides.  (e.g., us1, us2, eu1, eu2 ...)',
       default: 'us1',
       type: 'text',
       userCanEdit: false,

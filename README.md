@@ -19,7 +19,7 @@ To learn more about Wiz, visit the [official website](https://www.wiz.io/about).
 The Domain used to obtain your WIZ Authentication Token
 
 ### API Region
-The region where the API User resides.  (e.g. us1, us2, eu1, eu2 ...)
+The region where the API User resides.  (e.g., us1, us2, eu1, eu2 ...)
 
 ### Client ID
 Your Wiz Client ID
