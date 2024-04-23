@@ -28,7 +28,7 @@ const requestWithDefaults = createRequestWithDefaults({
 
     return {
       method: 'POST',
-      url: `https://api.${options.apiRegion.value}.app.wiz.io/graphql`,
+      url: `https://api.${options.apiRegion}.app.wiz.io/graphql`,
       headers: {
         accept: 'application/json',
         authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const getToken = async (options) => {
     'body.access_token',
     await requestForAuth({
       method: 'POST',
-      url: 'https://auth.app.wiz.io/oauth/token',
+      url: `https://${options.authTokenDomain}/oauth/token`,
       headers: {
         accept: 'application/json',
         'content-type': 'application/x-www-form-urlencoded'
