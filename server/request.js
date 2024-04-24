@@ -15,7 +15,8 @@ const tokenCache = new NodeCache({
 
 const requestForAuth = createRequestWithDefaults({
   config,
-  roundedSuccessStatusCodes: [200]
+  roundedSuccessStatusCodes: [200],
+  requestOptionsToOmitFromLogsKeyPaths: ['form.client_secret']
 });
 
 const requestWithDefaults = createRequestWithDefaults({
