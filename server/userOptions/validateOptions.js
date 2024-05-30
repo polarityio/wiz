@@ -3,6 +3,7 @@ const { validateStringOptions } = require('./utils');
 const validateOptions = async (options, callback) => {
   const stringOptionsErrorMessages = {
     authTokenDomain: '* Required',
+    apiRegion: '* Required',
     clientId: '* Required',
     clientSecret: '* Required'
   };
