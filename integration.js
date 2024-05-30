@@ -32,9 +32,9 @@ const doLookup = async (entities, _options, cb) => {
     const cveEntities = getEntityTypes('cve', entitiesWithIds);
 
     const [issues, vulnerabilities, assets] = await Promise.all([
-      queryIssues(cveEntities, options),
-      queryVulnerabilities(cveEntities, options),
-      queryAssets(entitiesWithIds, options)
+      options.queryIssues ? queryIssues(cveEntities, options) : [],
+      options.queryVulnerabilities ? queryVulnerabilities(cveEntities, options) : [],
+      options.queryAssets ? queryAssets(entitiesWithIds, options) : []
     ]);
 
     Logger.trace({ issues, vulnerabilities, assets });

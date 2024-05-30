@@ -48,8 +48,7 @@ module.exports = {
     {
       key: 'clientId',
       name: 'Client ID',
-      description:
-        'Your Wiz Client ID',
+      description: 'Your Wiz Client ID',
       default: '',
       type: 'text',
       userCanEdit: false,
@@ -58,10 +57,39 @@ module.exports = {
     {
       key: 'clientSecret',
       name: 'Client Secret',
-      description:
-        'Your Wiz Client Secret',
+      description: 'Your Wiz Client Secret',
       default: '',
       type: 'password',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'queryIssues',
+      name: 'Query Issues',
+      description:
+        "Uncheck if you don't wish to Query Issues. (Can be done in response to 504 error)",
+      default: true,
+      type: 'boolean',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'queryVulnerabilities',
+      name: 'Query Vulnerabilities',
+      description:
+        "Uncheck if you don't wish to Query Vulnerabilities. (Can be done in response to 504 error)",
+      default: true,
+      type: 'boolean',
+      userCanEdit: false,
+      adminOnly: true
+    },
+    {
+      key: 'queryAssets',
+      name: 'Query Assets',
+      description:
+        "Uncheck if you don't wish to Query Assets. (Can be done in response to 504 error)",
+      default: true,
+      type: 'boolean',
       userCanEdit: false,
       adminOnly: true
     }

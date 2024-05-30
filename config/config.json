@@ -61,6 +61,33 @@
       "type": "password",
       "userCanEdit": false,
       "adminOnly": true
+    },
+    {
+      "key": "queryIssues",
+      "name": "Query Issues",
+      "description": "Uncheck if you don't wish to Query Issues. (Can be done in response to 504 error)",
+      "default": true,
+      "type": "boolean",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "queryVulnerabilities",
+      "name": "Query Vulnerabilities",
+      "description": "Uncheck if you don't wish to Query Vulnerabilities. (Can be done in response to 504 error)",
+      "default": true,
+      "type": "boolean",
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "queryAssets",
+      "name": "Query Assets",
+      "description": "Uncheck if you don't wish to Query Assets. (Can be done in response to 504 error)",
+      "default": true,
+      "type": "boolean",
+      "userCanEdit": false,
+      "adminOnly": true
     }
   ]
 }
