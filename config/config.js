@@ -92,6 +92,17 @@ module.exports = {
       type: 'boolean',
       userCanEdit: false,
       adminOnly: true
+    },
+    ,
+    {
+      key: 'assetQueryTypes',
+      name: 'Asset Query Types',
+      description:
+        'A comma separated list of Asset(Cloud Resource) Types you want results to return for. If left empty, will return all Asset Types.',
+      default: '',
+      type: 'text',
+      userCanEdit: false,
+      adminOnly: true
     }
   ]
 };

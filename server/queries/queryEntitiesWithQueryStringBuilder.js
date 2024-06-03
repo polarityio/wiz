@@ -2,7 +2,6 @@ const { flow, chunk, map, join, mergeAll, get } = require('lodash/fp');
 const reduce = require('lodash/fp/reduce').convert({ cap: false });
 const { requestsInParallel } = require('../request');
 
-
 const queryEntitiesWithQueryStringBuilder = async (
   entitiesWithIds,
   options,
@@ -12,7 +11,8 @@ const queryEntitiesWithQueryStringBuilder = async (
   const queries = buildAggregateQueries(
     entitiesWithIds,
     buildQueryStringWithOneEntity,
-    numberOfQueriesToRunInOneRequest
+    numberOfQueriesToRunInOneRequest,
+    options
   );
 
   const queryResults = await runQueries(queries, options);
@@ -30,13 +30,14 @@ const queryEntitiesWithQueryStringBuilder = async (
 const buildAggregateQueries = (
   entitiesWithIds,
   buildQueryStringWithOneEntity,
-  numberOfQueriesToRunInOneRequest
+  numberOfQueriesToRunInOneRequest,
+  options
 ) =>
   flow(
     chunk(numberOfQueriesToRunInOneRequest),
     map((entities) =>
       flow(
-        map(buildQueryStringWithOneEntity),
+        map((entity) => buildQueryStringWithOneEntity(entity, options)),
         join(''),
         (queriesWithIds) => `query {${queriesWithIds}
 }`
