@@ -36,6 +36,10 @@ Uncheck if you don't wish to Query Vulnerabilities. (Can be done in response to 
 ### Query Assets
 Uncheck if you don't wish to Query Assets. (Can be done in response to 504 error)
 
+### Asset Query Types
+A comma separated list of Asset(Cloud Resource) Types you want results to return for. If left empty, will return all Asset Types.
+
+
 ## Installation Instructions
 Installation instructions for integrations are provided on the [PolarityIO GitHub Page](https://polarityio.github.io/).
 
