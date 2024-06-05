@@ -67,7 +67,7 @@ module.exports = {
       key: 'queryIssues',
       name: 'Query Issues',
       description:
-        "Uncheck if you don't wish to Query Issues. (Can be done in response to 504 error)",
+        "Uncheck if you don't wish to Query Issues.",
       default: true,
       type: 'boolean',
       userCanEdit: false,
@@ -77,7 +77,7 @@ module.exports = {
       key: 'queryVulnerabilities',
       name: 'Query Vulnerabilities',
       description:
-        "Uncheck if you don't wish to Query Vulnerabilities. (Can be done in response to 504 error)",
+        "Uncheck if you don't wish to Query Vulnerabilities.",
       default: true,
       type: 'boolean',
       userCanEdit: false,
@@ -87,7 +87,7 @@ module.exports = {
       key: 'queryAssets',
       name: 'Query Assets',
       description:
-        "Uncheck if you don't wish to Query Assets. (Can be done in response to 504 error)",
+        "Uncheck if you don't wish to Query Assets.",
       default: true,
       type: 'boolean',
       userCanEdit: false,
