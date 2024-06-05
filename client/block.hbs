@@ -632,9 +632,7 @@
           {{#if (or asset.graphEntity.type asset.type)}}
             <div>
               <span class="p-key">Type:</span>
-              <span class="p-value">{{titleize
-                  (humanize (dasherize (or asset.graphEntity.type asset.type)))
-                }}</span>
+              <span class="p-value">{{or asset.graphEntity.type asset.type}}</span>
             </div>
           {{/if}}
           {{#if asset.subscriptionName}}

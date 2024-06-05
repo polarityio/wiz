@@ -9,8 +9,13 @@ const {
   flatMap,
   uniqWith,
   isEqual,
-  identity
+  identity,
+  split,
+  trim,
+  compact,
+  uniq
 } = require('lodash/fp');
+const reduce = require('lodash/fp').reduce.convert({ cap: false });
 
 const isPrivateIP = (ip) => {
   var parts = ip.split('.');
@@ -21,7 +26,7 @@ const isPrivateIP = (ip) => {
       parseInt(parts[1], 10) <= 31) ||
     (parts[0] === '192' && parts[1] === '168')
   );
-}
+};
 
 const addIdsToEntities = (entities) =>
   map(
@@ -53,6 +58,9 @@ const getEntityTypes = (typesToGet, entities) => {
   return entitiesOfTypesToGet;
 };
 
+const splitCommaSeparatedUserOption = (key, options) =>
+  flow(get(key), split(','), map(trim), compact, uniq)(options);
+
 const getResultForThisEntity = (entity, results, onlyReturnUniqueResults = false) =>
   flow(
     filter(flow(get('resultId'), eq(entity.value))),
@@ -60,9 +68,21 @@ const getResultForThisEntity = (entity, results, onlyReturnUniqueResults = false
     onlyReturnUniqueResults ? uniqWith(isEqual) : identity
   )(results);
 
+const validateOptionsToDoLookupOptions = (options) =>
+  reduce(
+    (agg, optionObj, optionKey) => ({
+      ...agg,
+      [optionKey]: get('value', optionObj)
+    }),
+    {},
+    options
+  );
+
 module.exports = {
   addIdsToEntities,
   removePrivateIps,
   getEntityTypes,
-  getResultForThisEntity
+  getResultForThisEntity,
+  splitCommaSeparatedUserOption,
+  validateOptionsToDoLookupOptions
 };

@@ -7,7 +7,8 @@ const {
 const {
   removePrivateIps,
   getEntityTypes,
-  addIdsToEntities
+  addIdsToEntities,
+  splitCommaSeparatedUserOption
 } = require('./server/dataTransformations');
 
 const { validateOptions } = require('./server/userOptions');
@@ -22,7 +23,8 @@ const doLookup = async (entities, _options, cb) => {
     const options = {
       ..._options,
       maxConcurrent: 1,
-      minimumMillisecondsRequestWillTake: 350
+      minimumMillisecondsRequestWillTake: 350,
+      parsedAssetQueryTypes: splitCommaSeparatedUserOption('assetQueryTypes', _options)
     };
 
     const searchableEntities = removePrivateIps(entities);
@@ -32,9 +34,9 @@ const doLookup = async (entities, _options, cb) => {
     const cveEntities = getEntityTypes('cve', entitiesWithIds);
 
     const [issues, vulnerabilities, assets] = await Promise.all([
-      queryIssues(cveEntities, options),
-      queryVulnerabilities(cveEntities, options),
-      queryAssets(entitiesWithIds, options)
+      options.queryIssues ? queryIssues(cveEntities, options) : [],
+      options.queryVulnerabilities ? queryVulnerabilities(cveEntities, options) : [],
+      options.queryAssets ? queryAssets(entitiesWithIds, options) : []
     ]);
 
     Logger.trace({ issues, vulnerabilities, assets });

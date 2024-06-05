@@ -1,5 +1,4 @@
-
-const { map, get, getOr, filter, flow, negate, isEmpty } = require('lodash/fp');
+const { map, get, getOr, filter, flow, negate, isEmpty, size } = require('lodash/fp');
 const { parallelLimit } = require('async');
 
 const {
@@ -38,15 +37,25 @@ const requestWithDefaults = createRequestWithDefaults({
       body: JSON.stringify({ query })
     };
   },
-  postprocessRequestResponse: async (response) => ({
-    /* 
+  postprocessRequestResponse: async (response) => {
+    const bodyErrors = flow(get('body'), JSON.parse, get('errors'))(response);
+    if (size(bodyErrors)) {
+      const bodyError = new Error(get('0.message', bodyErrors));
+      bodyError.status = response.status;
+
+      throw bodyError;
+    }
+
+    return {
+      /* 
       This is required as if you add `json: true` the request fails on this API.
       I've also found if you capitalize `content-type` to `Content-Type` it fails
       so manual parsing the response body is required.
     */
-    ...response,
-    body: JSON.parse(response.body)
-  }),
+      ...response,
+      body: JSON.parse(response.body)
+    };
+  },
   postprocessRequestFailure: (error) => {
     error.message = `${error.message} - (${error.status}) | ${error.description}`;
 
@@ -79,7 +88,7 @@ const getToken = async (options) => {
   );
 
   tokenCache.set(tokenCacheKey, token);
-  
+
   return token;
 };
 

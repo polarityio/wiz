@@ -9,8 +9,14 @@ const queryAssets = async (entitiesWithIds, options) =>
     buildAssetQueryString
   );
 
-const buildAssetQueryString = (entity) => `
-  ${entity.id}: cloudResources(first: ${MAX_PAGE_SIZE}, filterBy: { search: "${entity.value}" }) {
+const buildAssetQueryString = (entity, options) => `
+  ${entity.id}: cloudResources(
+    first: ${MAX_PAGE_SIZE}, 
+    filterBy: { 
+      search: "${entity.value}",
+      ${options.parsedAssetQueryTypes.length ? `type: ${JSON.stringify(options.parsedAssetQueryTypes)}` : ''}
+    }
+  ) {
     nodes {
       ... on CloudResource {
         id
