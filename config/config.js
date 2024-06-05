@@ -93,7 +93,6 @@ module.exports = {
       userCanEdit: false,
       adminOnly: true
     },
-    ,
     {
       key: 'assetQueryTypes',
       name: 'Asset Query Types',
