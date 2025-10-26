@@ -1,12 +1,6 @@
-const {
-  validateOptionsToDoLookupOptions,
-  splitCommaSeparatedUserOption
-} = require('../dataTransformations');
-const { queryAssets } = require('../queries');
 const { validateStringOptions } = require('./utils');
 const {
   logging: { getLogger },
-  errors: { parseErrorToReadableJson }
 } = require('polarity-integration-utils');
 
 const validateOptions = async (options, callback) => {
@@ -64,38 +58,9 @@ const validateOptions = async (options, callback) => {
       ]
     : [];
 
-  const assetTypesError = options.assetQueryTypes.value.length
-    ? await getAssetTypesError(options)
-    : [];
-
-  const errors = endingSlashError.concat(protocolError).concat(assetTypesError);
+  const errors = endingSlashError.concat(protocolError);
 
   callback(null, errors);
-};
-
-const getAssetTypesError = async (options) => {
-  try {
-    const doLookupOptions = validateOptionsToDoLookupOptions(options);
-
-    const optionsWithParsedTypes = {
-      ...doLookupOptions,
-      parsedAssetQueryTypes: splitCommaSeparatedUserOption(
-        'assetQueryTypes',
-        doLookupOptions
-      )
-    };
-
-    await queryAssets([{ id: 'foo', value: '8.8.8.8' }], optionsWithParsedTypes);
-
-    return [];
-  } catch (error) {
-    getLogger().error(
-      { error, formattedError: parseErrorToReadableJson(error) },
-      'Search Asset Type invalid'
-    );
-    const message = 'One or more Search Asset Types are Invalid';
-    return [{ key: 'assetQueryTypes', message }];
-  }
 };
 
 module.exports = validateOptions;

@@ -6,6 +6,16 @@ const {
 } = require('polarity-integration-utils');
 const config = require('../config/config');
 
+// Workaround required because v1 of the utils library is expecting a request object
+// on the config
+config.request = {
+  cert: '',
+  key: '',
+  passphrase: '',
+  ca: '',
+  proxy: ''
+};
+
 const NodeCache = require('node-cache');
 const tokenCache = new NodeCache({
   //Tokens expire after 24 hours so expiring 1 hour before
