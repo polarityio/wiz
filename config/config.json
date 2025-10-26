@@ -4,6 +4,20 @@
   "acronym": "WIZ",
   "description": "Search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
   "entityTypes": ["cve", "IPv4", "domain"],
+  "dataTypes": [
+    {
+      "type": "custom",
+      "name": "Hostname",
+      "description": "Search devices by hostname's which are between 4 and 64 characters long and consists of the letters A to Z, 0-9, underscore, and dashes.",
+      "editable": true,
+      "enabled": false,
+      "key": "hostname",
+      "regex": "\\b[a-zA-Z_0-9\\-]{4,64}\\b"
+    },
+    "cve",
+    "IPv4",
+    "domain"
+  ],
   "defaultColor": "light-blue",
   "onDemandOnly": true,
   "styles": ["./client/styles.less"],
@@ -14,13 +28,6 @@
     "template": {
       "file": "./client/block.hbs"
     }
-  },
-  "request": {
-    "cert": "",
-    "key": "",
-    "passphrase": "",
-    "ca": "",
-    "proxy": ""
   },
   "logging": {
     "level": "info"
@@ -90,11 +97,712 @@
       "adminOnly": true
     },
     {
-      "key": "assetQueryTypes",
+      "key": "assetQueryTypeList",
       "name": "Asset Query Types",
-      "description": "A comma separated list of Asset(Cloud Resource) Types you want results to return for. If left empty, will return all Asset Types.",
-      "default": "",
-      "type": "text",
+      "description": "List of Asset (Cloud Resource) Types you want results to return for.",
+      "default": [
+        {
+          "value": "ACCESS_ROLE",
+          "display": "ACCESS_ROLE"
+        },
+        {
+          "value": "ACCESS_ROLE_BINDING",
+          "display": "ACCESS_ROLE_BINDING"
+        },
+        {
+          "value": "ACCESS_ROLE_PERMISSION",
+          "display": "ACCESS_ROLE_PERMISSION"
+        },
+        {
+          "value": "API_GATEWAY",
+          "display": "API_GATEWAY"
+        },
+        {
+          "value": "BACKUP_SERVICE",
+          "display": "BACKUP_SERVICE"
+        },
+        {
+          "value": "BUCKET",
+          "display": "BUCKET"
+        },
+        {
+          "value": "CDN",
+          "display": "CDN"
+        },
+        {
+          "value": "CICD_SERVICE",
+          "display": "CICD_SERVICE"
+        },
+        {
+          "value": "CLOUD_LOG_CONFIGURATION",
+          "display": "CLOUD_LOG_CONFIGURATION"
+        },
+        {
+          "value": "CLOUD_ORGANIZATION",
+          "display": "CLOUD_ORGANIZATION"
+        },
+        {
+          "value": "COMPUTE_INSTANCE_GROUP",
+          "display": "COMPUTE_INSTANCE_GROUP"
+        },
+        {
+          "value": "CONFIG_MAP",
+          "display": "CONFIG_MAP"
+        },
+        {
+          "value": "CONTAINER",
+          "display": "CONTAINER"
+        },
+        {
+          "value": "CONTAINER_GROUP",
+          "display": "CONTAINER_GROUP"
+        },
+        {
+          "value": "CONTAINER_IMAGE",
+          "display": "CONTAINER_IMAGE"
+        },
+        {
+          "value": "CONTAINER_REGISTRY",
+          "display": "CONTAINER_REGISTRY"
+        },
+        {
+          "value": "CONTAINER_REPOSITORY",
+          "display": "CONTAINER_REPOSITORY"
+        },
+        {
+          "value": "CONTAINER_SERVICE",
+          "display": "CONTAINER_SERVICE"
+        },
+        {
+          "value": "CONTROLLER_REVISION",
+          "display": "CONTROLLER_REVISION"
+        },
+        {
+          "value": "DAEMON_SET",
+          "display": "DAEMON_SET"
+        },
+        {
+          "value": "DATABASE",
+          "display": "DATABASE"
+        },
+        {
+          "value": "DATA_WORKFLOW",
+          "display": "DATA_WORKFLOW"
+        },
+        {
+          "value": "DATA_WORKLOAD",
+          "display": "DATA_WORKLOAD"
+        },
+        {
+          "value": "DB_SERVER",
+          "display": "DB_SERVER"
+        },
+        {
+          "value": "DEPLOYMENT",
+          "display": "DEPLOYMENT"
+        },
+        {
+          "value": "DNS_RECORD",
+          "display": "DNS_RECORD"
+        },
+        {
+          "value": "DNS_ZONE",
+          "display": "DNS_ZONE"
+        },
+        {
+          "value": "DOMAIN",
+          "display": "DOMAIN"
+        },
+        {
+          "value": "EMAIL_SERVICE",
+          "display": "EMAIL_SERVICE"
+        },
+        {
+          "value": "ENCRYPTION_KEY",
+          "display": "ENCRYPTION_KEY"
+        },
+        {
+          "value": "FILE_SYSTEM_SERVICE",
+          "display": "FILE_SYSTEM_SERVICE"
+        },
+        {
+          "value": "FIREWALL",
+          "display": "FIREWALL"
+        },
+        {
+          "value": "GATEWAY",
+          "display": "GATEWAY"
+        },
+        {
+          "value": "GOVERNANCE_POLICY",
+          "display": "GOVERNANCE_POLICY"
+        },
+        {
+          "value": "GOVERNANCE_POLICY_GROUP",
+          "display": "GOVERNANCE_POLICY_GROUP"
+        },
+        {
+          "value": "IP_RANGE",
+          "display": "IP_RANGE"
+        },
+        {
+          "value": "KUBERNETES_CLUSTER",
+          "display": "KUBERNETES_CLUSTER"
+        },
+        {
+          "value": "KUBERNETES_CRON_JOB",
+          "display": "KUBERNETES_CRON_JOB"
+        },
+        {
+          "value": "KUBERNETES_INGRESS",
+          "display": "KUBERNETES_INGRESS"
+        },
+        {
+          "value": "KUBERNETES_INGRESS_CONTROLLER",
+          "display": "KUBERNETES_INGRESS_CONTROLLER"
+        },
+        {
+          "value": "KUBERNETES_JOB",
+          "display": "KUBERNETES_JOB"
+        },
+        {
+          "value": "KUBERNETES_NETWORK_POLICY",
+          "display": "KUBERNETES_NETWORK_POLICY"
+        },
+        {
+          "value": "KUBERNETES_NODE",
+          "display": "KUBERNETES_NODE"
+        },
+        {
+          "value": "KUBERNETES_PERSISTENT_VOLUME",
+          "display": "KUBERNETES_PERSISTENT_VOLUME"
+        },
+        {
+          "value": "KUBERNETES_PERSISTENT_VOLUME_CLAIM",
+          "display": "KUBERNETES_PERSISTENT_VOLUME_CLAIM"
+        },
+        {
+          "value": "KUBERNETES_POD_SECURITY_POLICY",
+          "display": "KUBERNETES_POD_SECURITY_POLICY"
+        },
+        {
+          "value": "KUBERNETES_SERVICE",
+          "display": "KUBERNETES_SERVICE"
+        },
+        {
+          "value": "KUBERNETES_STORAGE_CLASS",
+          "display": "KUBERNETES_STORAGE_CLASS"
+        },
+        {
+          "value": "KUBERNETES_VOLUME",
+          "display": "KUBERNETES_VOLUME"
+        },
+        {
+          "value": "LOAD_BALANCER",
+          "display": "LOAD_BALANCER"
+        },
+        {
+          "value": "MANAGEMENT_SERVICE",
+          "display": "MANAGEMENT_SERVICE"
+        },
+        {
+          "value": "MANAGED_CERTIFICATE",
+          "display": "MANAGED_CERTIFICATE"
+        },
+        {
+          "value": "MAP_REDUCE_CLUSTER",
+          "display": "MAP_REDUCE_CLUSTER"
+        },
+        {
+          "value": "MESSAGING_SERVICE",
+          "display": "MESSAGING_SERVICE"
+        },
+        {
+          "value": "MONITOR_ALERT",
+          "display": "MONITOR_ALERT"
+        },
+        {
+          "value": "NAMESPACE",
+          "display": "NAMESPACE"
+        },
+        {
+          "value": "NETWORK_ADDRESS",
+          "display": "NETWORK_ADDRESS"
+        },
+        {
+          "value": "NETWORK_INTERFACE",
+          "display": "NETWORK_INTERFACE"
+        },
+        {
+          "value": "PEERING",
+          "display": "PEERING"
+        },
+        {
+          "value": "POD",
+          "display": "POD"
+        },
+        {
+          "value": "PRIVATE_ENDPOINT",
+          "display": "PRIVATE_ENDPOINT"
+        },
+        {
+          "value": "PRIVATE_LINK",
+          "display": "PRIVATE_LINK"
+        },
+        {
+          "value": "RAW_ACCESS_POLICY",
+          "display": "RAW_ACCESS_POLICY"
+        },
+        {
+          "value": "REGISTERED_DOMAIN",
+          "display": "REGISTERED_DOMAIN"
+        },
+        {
+          "value": "REGION",
+          "display": "REGION"
+        },
+        {
+          "value": "REPLICA_SET",
+          "display": "REPLICA_SET"
+        },
+        {
+          "value": "RESOURCE_GROUP",
+          "display": "RESOURCE_GROUP"
+        },
+        {
+          "value": "ROUTE_TABLE",
+          "display": "ROUTE_TABLE"
+        },
+        {
+          "value": "SEARCH_INDEX",
+          "display": "SEARCH_INDEX"
+        },
+        {
+          "value": "SECRET",
+          "display": "SECRET"
+        },
+        {
+          "value": "SECRET_CONTAINER",
+          "display": "SECRET_CONTAINER"
+        },
+        {
+          "value": "SERVERLESS",
+          "display": "SERVERLESS"
+        },
+        {
+          "value": "SERVERLESS_PACKAGE",
+          "display": "SERVERLESS_PACKAGE"
+        },
+        {
+          "value": "SERVICE_CONFIGURATION",
+          "display": "SERVICE_CONFIGURATION"
+        },
+        {
+          "value": "SERVICE_USAGE_TECHNOLOGY",
+          "display": "SERVICE_USAGE_TECHNOLOGY"
+        },
+        {
+          "value": "SNAPSHOT",
+          "display": "SNAPSHOT"
+        },
+        {
+          "value": "STATEFUL_SET",
+          "display": "STATEFUL_SET"
+        },
+        {
+          "value": "STORAGE_ACCOUNT",
+          "display": "STORAGE_ACCOUNT"
+        },
+        {
+          "value": "SUBNET",
+          "display": "SUBNET"
+        },
+        {
+          "value": "SUBSCRIPTION",
+          "display": "SUBSCRIPTION"
+        },
+        {
+          "value": "VIRTUAL_DESKTOP",
+          "display": "VIRTUAL_DESKTOP"
+        },
+        {
+          "value": "VIRTUAL_MACHINE",
+          "display": "VIRTUAL_MACHINE"
+        },
+        {
+          "value": "VIRTUAL_MACHINE_IMAGE",
+          "display": "VIRTUAL_MACHINE_IMAGE"
+        },
+        {
+          "value": "VIRTUAL_NETWORK",
+          "display": "VIRTUAL_NETWORK"
+        },
+        {
+          "value": "VOLUME",
+          "display": "VOLUME"
+        },
+        {
+          "value": "WEB_SERVICE",
+          "display": "WEB_SERVICE"
+        }
+      ],
+      "type": "select",
+      "options": [
+        {
+          "value": "ACCESS_ROLE",
+          "display": "ACCESS_ROLE"
+        },
+        {
+          "value": "ACCESS_ROLE_BINDING",
+          "display": "ACCESS_ROLE_BINDING"
+        },
+        {
+          "value": "ACCESS_ROLE_PERMISSION",
+          "display": "ACCESS_ROLE_PERMISSION"
+        },
+        {
+          "value": "API_GATEWAY",
+          "display": "API_GATEWAY"
+        },
+        {
+          "value": "BACKUP_SERVICE",
+          "display": "BACKUP_SERVICE"
+        },
+        {
+          "value": "BUCKET",
+          "display": "BUCKET"
+        },
+        {
+          "value": "CDN",
+          "display": "CDN"
+        },
+        {
+          "value": "CICD_SERVICE",
+          "display": "CICD_SERVICE"
+        },
+        {
+          "value": "CLOUD_LOG_CONFIGURATION",
+          "display": "CLOUD_LOG_CONFIGURATION"
+        },
+        {
+          "value": "CLOUD_ORGANIZATION",
+          "display": "CLOUD_ORGANIZATION"
+        },
+        {
+          "value": "COMPUTE_INSTANCE_GROUP",
+          "display": "COMPUTE_INSTANCE_GROUP"
+        },
+        {
+          "value": "CONFIG_MAP",
+          "display": "CONFIG_MAP"
+        },
+        {
+          "value": "CONTAINER",
+          "display": "CONTAINER"
+        },
+        {
+          "value": "CONTAINER_GROUP",
+          "display": "CONTAINER_GROUP"
+        },
+        {
+          "value": "CONTAINER_IMAGE",
+          "display": "CONTAINER_IMAGE"
+        },
+        {
+          "value": "CONTAINER_REGISTRY",
+          "display": "CONTAINER_REGISTRY"
+        },
+        {
+          "value": "CONTAINER_REPOSITORY",
+          "display": "CONTAINER_REPOSITORY"
+        },
+        {
+          "value": "CONTAINER_SERVICE",
+          "display": "CONTAINER_SERVICE"
+        },
+        {
+          "value": "CONTROLLER_REVISION",
+          "display": "CONTROLLER_REVISION"
+        },
+        {
+          "value": "DAEMON_SET",
+          "display": "DAEMON_SET"
+        },
+        {
+          "value": "DATABASE",
+          "display": "DATABASE"
+        },
+        {
+          "value": "DATA_WORKFLOW",
+          "display": "DATA_WORKFLOW"
+        },
+        {
+          "value": "DATA_WORKLOAD",
+          "display": "DATA_WORKLOAD"
+        },
+        {
+          "value": "DB_SERVER",
+          "display": "DB_SERVER"
+        },
+        {
+          "value": "DEPLOYMENT",
+          "display": "DEPLOYMENT"
+        },
+        {
+          "value": "DNS_RECORD",
+          "display": "DNS_RECORD"
+        },
+        {
+          "value": "DNS_ZONE",
+          "display": "DNS_ZONE"
+        },
+        {
+          "value": "DOMAIN",
+          "display": "DOMAIN"
+        },
+        {
+          "value": "EMAIL_SERVICE",
+          "display": "EMAIL_SERVICE"
+        },
+        {
+          "value": "ENCRYPTION_KEY",
+          "display": "ENCRYPTION_KEY"
+        },
+        {
+          "value": "FILE_SYSTEM_SERVICE",
+          "display": "FILE_SYSTEM_SERVICE"
+        },
+        {
+          "value": "FIREWALL",
+          "display": "FIREWALL"
+        },
+        {
+          "value": "GATEWAY",
+          "display": "GATEWAY"
+        },
+        {
+          "value": "GOVERNANCE_POLICY",
+          "display": "GOVERNANCE_POLICY"
+        },
+        {
+          "value": "GOVERNANCE_POLICY_GROUP",
+          "display": "GOVERNANCE_POLICY_GROUP"
+        },
+        {
+          "value": "IP_RANGE",
+          "display": "IP_RANGE"
+        },
+        {
+          "value": "KUBERNETES_CLUSTER",
+          "display": "KUBERNETES_CLUSTER"
+        },
+        {
+          "value": "KUBERNETES_CRON_JOB",
+          "display": "KUBERNETES_CRON_JOB"
+        },
+        {
+          "value": "KUBERNETES_INGRESS",
+          "display": "KUBERNETES_INGRESS"
+        },
+        {
+          "value": "KUBERNETES_INGRESS_CONTROLLER",
+          "display": "KUBERNETES_INGRESS_CONTROLLER"
+        },
+        {
+          "value": "KUBERNETES_JOB",
+          "display": "KUBERNETES_JOB"
+        },
+        {
+          "value": "KUBERNETES_NETWORK_POLICY",
+          "display": "KUBERNETES_NETWORK_POLICY"
+        },
+        {
+          "value": "KUBERNETES_NODE",
+          "display": "KUBERNETES_NODE"
+        },
+        {
+          "value": "KUBERNETES_PERSISTENT_VOLUME",
+          "display": "KUBERNETES_PERSISTENT_VOLUME"
+        },
+        {
+          "value": "KUBERNETES_PERSISTENT_VOLUME_CLAIM",
+          "display": "KUBERNETES_PERSISTENT_VOLUME_CLAIM"
+        },
+        {
+          "value": "KUBERNETES_POD_SECURITY_POLICY",
+          "display": "KUBERNETES_POD_SECURITY_POLICY"
+        },
+        {
+          "value": "KUBERNETES_SERVICE",
+          "display": "KUBERNETES_SERVICE"
+        },
+        {
+          "value": "KUBERNETES_STORAGE_CLASS",
+          "display": "KUBERNETES_STORAGE_CLASS"
+        },
+        {
+          "value": "KUBERNETES_VOLUME",
+          "display": "KUBERNETES_VOLUME"
+        },
+        {
+          "value": "LOAD_BALANCER",
+          "display": "LOAD_BALANCER"
+        },
+        {
+          "value": "MANAGEMENT_SERVICE",
+          "display": "MANAGEMENT_SERVICE"
+        },
+        {
+          "value": "MANAGED_CERTIFICATE",
+          "display": "MANAGED_CERTIFICATE"
+        },
+        {
+          "value": "MAP_REDUCE_CLUSTER",
+          "display": "MAP_REDUCE_CLUSTER"
+        },
+        {
+          "value": "MESSAGING_SERVICE",
+          "display": "MESSAGING_SERVICE"
+        },
+        {
+          "value": "MONITOR_ALERT",
+          "display": "MONITOR_ALERT"
+        },
+        {
+          "value": "NAMESPACE",
+          "display": "NAMESPACE"
+        },
+        {
+          "value": "NETWORK_ADDRESS",
+          "display": "NETWORK_ADDRESS"
+        },
+        {
+          "value": "NETWORK_INTERFACE",
+          "display": "NETWORK_INTERFACE"
+        },
+        {
+          "value": "PEERING",
+          "display": "PEERING"
+        },
+        {
+          "value": "POD",
+          "display": "POD"
+        },
+        {
+          "value": "PRIVATE_ENDPOINT",
+          "display": "PRIVATE_ENDPOINT"
+        },
+        {
+          "value": "PRIVATE_LINK",
+          "display": "PRIVATE_LINK"
+        },
+        {
+          "value": "RAW_ACCESS_POLICY",
+          "display": "RAW_ACCESS_POLICY"
+        },
+        {
+          "value": "REGISTERED_DOMAIN",
+          "display": "REGISTERED_DOMAIN"
+        },
+        {
+          "value": "REGION",
+          "display": "REGION"
+        },
+        {
+          "value": "REPLICA_SET",
+          "display": "REPLICA_SET"
+        },
+        {
+          "value": "RESOURCE_GROUP",
+          "display": "RESOURCE_GROUP"
+        },
+        {
+          "value": "ROUTE_TABLE",
+          "display": "ROUTE_TABLE"
+        },
+        {
+          "value": "SEARCH_INDEX",
+          "display": "SEARCH_INDEX"
+        },
+        {
+          "value": "SECRET",
+          "display": "SECRET"
+        },
+        {
+          "value": "SECRET_CONTAINER",
+          "display": "SECRET_CONTAINER"
+        },
+        {
+          "value": "SERVERLESS",
+          "display": "SERVERLESS"
+        },
+        {
+          "value": "SERVERLESS_PACKAGE",
+          "display": "SERVERLESS_PACKAGE"
+        },
+        {
+          "value": "SERVICE_CONFIGURATION",
+          "display": "SERVICE_CONFIGURATION"
+        },
+        {
+          "value": "SERVICE_USAGE_TECHNOLOGY",
+          "display": "SERVICE_USAGE_TECHNOLOGY"
+        },
+        {
+          "value": "SNAPSHOT",
+          "display": "SNAPSHOT"
+        },
+        {
+          "value": "STATEFUL_SET",
+          "display": "STATEFUL_SET"
+        },
+        {
+          "value": "STORAGE_ACCOUNT",
+          "display": "STORAGE_ACCOUNT"
+        },
+        {
+          "value": "SUBNET",
+          "display": "SUBNET"
+        },
+        {
+          "value": "SUBSCRIPTION",
+          "display": "SUBSCRIPTION"
+        },
+        {
+          "value": "VIRTUAL_DESKTOP",
+          "display": "VIRTUAL_DESKTOP"
+        },
+        {
+          "value": "VIRTUAL_MACHINE",
+          "display": "VIRTUAL_MACHINE"
+        },
+        {
+          "value": "VIRTUAL_MACHINE_IMAGE",
+          "display": "VIRTUAL_MACHINE_IMAGE"
+        },
+        {
+          "value": "VIRTUAL_NETWORK",
+          "display": "VIRTUAL_NETWORK"
+        },
+        {
+          "value": "VOLUME",
+          "display": "VOLUME"
+        },
+        {
+          "value": "WEB_SERVICE",
+          "display": "WEB_SERVICE"
+        }
+      ],
+      "multiple": true,
+      "userCanEdit": false,
+      "adminOnly": true
+    },
+    {
+      "key": "searchPrivateIps",
+      "name": "Search Private IPs",
+      "description": "If checked, the integration will search private IPs.",
+      "default": true,
+      "type": "boolean",
       "userCanEdit": false,
       "adminOnly": true
     }

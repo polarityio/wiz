@@ -8,7 +8,6 @@ const {
   removePrivateIps,
   getEntityTypes,
   addIdsToEntities,
-  splitCommaSeparatedUserOption
 } = require('./server/dataTransformations');
 
 const { validateOptions } = require('./server/userOptions');
@@ -24,10 +23,14 @@ const doLookup = async (entities, _options, cb) => {
       ..._options,
       maxConcurrent: 1,
       minimumMillisecondsRequestWillTake: 350,
-      parsedAssetQueryTypes: splitCommaSeparatedUserOption('assetQueryTypes', _options)
+      parsedAssetQueryTypes: _options.assetQueryTypeList.map(asset => asset.value)
     };
 
-    const searchableEntities = removePrivateIps(entities);
+    let searchableEntities = entities;
+    
+    if(!options.searchPrivateIps){
+      searchableEntities = removePrivateIps(entities);  
+    }
 
     const entitiesWithIds = addIdsToEntities(searchableEntities);
 
