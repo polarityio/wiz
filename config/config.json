@@ -3,7 +3,11 @@
   "name": "Wiz",
   "acronym": "WIZ",
   "description": "Search Wiz for Issues and Vulnerabilities by CVEs and Assets by IP Addresses, Domains, and CVEs",
-  "entityTypes": ["cve", "IPv4", "domain"],
+  "entityTypes": [
+    "cve",
+    "IPv4",
+    "domain"
+  ],
   "dataTypes": [
     {
       "type": "custom",
@@ -20,7 +24,9 @@
   ],
   "defaultColor": "light-blue",
   "onDemandOnly": true,
-  "styles": ["./client/styles.less"],
+  "styles": [
+    "./client/styles.less"
+  ],
   "block": {
     "component": {
       "file": "./client/block.js"
@@ -806,5 +812,10 @@
       "userCanEdit": false,
       "adminOnly": true
     }
-  ]
+  ],
+  "reducer": {
+    "details": {
+      "file": "./reducers/details.json"
+    }
+  }
 }

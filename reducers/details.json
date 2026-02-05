@@ -1,0 +1,76 @@
+{
+  "root": {
+    "path": "",
+    "on_null": "return_empty"
+  },
+  "pipeline": [
+    {
+      "op": "copy",
+      "from": "issues[].description",
+      "to": "reduced_results.issues_description"
+    },
+    {
+      "op": "copy",
+      "from": "issues[].severity",
+      "to": "reduced_results.issues_severity"
+    },
+    {
+      "op": "copy",
+      "from": "issues[].status",
+      "to": "reduced_results.issues_status"
+    },
+    {
+      "op": "copy",
+      "from": "issues[].updatedAt",
+      "to": "reduced_results.issues_updated_at"
+    },
+    {
+      "op": "copy",
+      "from": "issues[].resolvedAt",
+      "to": "reduced_results.issues_resolved_at"
+    },
+    {
+      "op": "copy",
+      "from": "issues[].entity.name",
+      "to": "reduced_results.issues_entity_name"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].name",
+      "to": "reduced_results.vulnerabilities_name"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].vendorSeverity",
+      "to": "reduced_results.vulnerabilities_vendor_severity"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].description",
+      "to": "reduced_results.vulnerabilities_description"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].status",
+      "to": "reduced_results.vulnerabilities_status"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].score",
+      "to": "reduced_results.vulnerabilities_score"
+    },
+    {
+      "op": "copy",
+      "from": "vulnerabilities[].impactScore",
+      "to": "reduced_results.vulnerabilities_impact_score"
+    },
+    {
+      "op": "prune",
+      "strategy": "empty_values",
+      "target": "reduced_results"
+    }
+  ],
+  "output": {
+    "result": "$working.reduced_results"
+  }
+}

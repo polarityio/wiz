@@ -1,0 +1,246 @@
+{
+  "issues": [
+    {
+      "id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "description": "Container image vulnerabilities detected in production workload. Critical CVE-2024-1234 affects base OS packages with known exploits in the wild.",
+      "type": "VULNERABILITY",
+      "status": "OPEN",
+      "severity": "CRITICAL",
+      "evidenceQuery": "cloudResource where type='CONTAINER_IMAGE' and vulnerabilities.severity='CRITICAL'",
+      "openReason": "SECURITY_POLICY_VIOLATION",
+      "createdAt": "2024-01-10T08:30:00Z",
+      "updatedAt": "2024-01-15T14:22:33Z",
+      "dueAt": "2024-01-25T23:59:59Z",
+      "resolvedAt": null,
+      "statusChangedAt": "2024-01-10T08:30:00Z",
+      "rejectionExpiredAt": null,
+      "entity": {
+        "id": "e3a2b1c0-9876-4321-b567-1a2b3c4d5e6f",
+        "type": "CONTAINER_IMAGE",
+        "name": "prod-api-server:v2.4.1",
+        "properties": {
+          "severity": "CRITICAL",
+          "weightedSeverity": "HIGH",
+          "detectionMethod": "SCANNER",
+          "description": "Multiple critical vulnerabilities in base image",
+          "remediation": "Update to patched image version v2.4.2 or newer"
+        },
+        "firstSeen": "2023-12-01T00:00:00Z",
+        "lastSeen": "2024-01-15T12:00:00Z"
+      },
+      "entitySnapshot": {
+        "id": "snapshot-123",
+        "name": "prod-api-server:v2.4.1-snapshot",
+        "type": "CONTAINER_IMAGE",
+        "status": "ACTIVE"
+      },
+      "projects": [
+        {
+          "id": "proj-001",
+          "name": "Production API Infrastructure",
+          "description": "Core API services for customer-facing applications",
+          "businessUnit": "Engineering",
+          "riskProfile": {
+            "businessImpact": "HIGH",
+            "hasExposedAPI": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "b12cd34e-56ff-7890-ab12-3456789abcde",
+      "description": "Kubernetes cluster has publicly exposed management API without proper authentication controls",
+      "type": "TOXIC_COMBINATION",
+      "status": "IN_PROGRESS",
+      "severity": "HIGH",
+      "evidenceQuery": "kubernetes where exposed=true and authentication='NONE'",
+      "openReason": "NEW_FINDING",
+      "createdAt": "2024-01-12T11:45:00Z",
+      "updatedAt": "2024-01-14T09:15:22Z",
+      "dueAt": "2024-01-30T23:59:59Z",
+      "resolvedAt": null,
+      "statusChangedAt": "2024-01-13T16:30:00Z",
+      "entity": {
+        "id": "k8s-cluster-789",
+        "type": "KUBERNETES_CLUSTER",
+        "name": "prod-us-east-cluster-01",
+        "properties": {
+          "severity": "HIGH",
+          "description": "Cluster management API exposed to internet"
+        },
+        "firstSeen": "2023-11-15T00:00:00Z",
+        "lastSeen": "2024-01-14T08:00:00Z"
+      },
+      "projects": [
+        {
+          "id": "proj-002",
+          "name": "Container Orchestration Platform",
+          "description": "Kubernetes infrastructure management",
+          "businessUnit": "DevOps",
+          "riskProfile": {
+            "businessImpact": "CRITICAL",
+            "hasExposedAPI": true
+          }
+        }
+      ]
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "id": "vuln-cve-2024-1234",
+      "portalUrl": "https://app.wiz.io/vulnerabilities/vuln-cve-2024-1234",
+      "name": "CVE-2024-1234",
+      "CVEDescription": "Remote code execution vulnerability in OpenSSL library versions prior to 3.0.8 allowing unauthenticated attackers to execute arbitrary code via specially crafted TLS handshake",
+      "CVSSSeverity": "CRITICAL",
+      "score": 9.8,
+      "exploitabilityScore": 3.9,
+      "impactScore": 5.9,
+      "dataSourceName": "NVD",
+      "hasExploit": true,
+      "hasCisaKevExploit": true,
+      "status": "OPEN",
+      "vendorSeverity": "CRITICAL",
+      "firstDetectedAt": "2024-01-10T08:30:00Z",
+      "lastDetectedAt": "2024-01-15T12:00:00Z",
+      "resolvedAt": null,
+      "description": "Critical RCE vulnerability affecting OpenSSL. Active exploitation observed in the wild. Immediate patching required.",
+      "remediation": "Upgrade OpenSSL to version 3.0.8 or later. Apply vendor security patches immediately.",
+      "detailedName": "OpenSSL Remote Code Execution",
+      "version": "3.0.7",
+      "fixedVersion": "3.0.8",
+      "detectionMethod": "PACKAGE_SCANNER",
+      "link": "https://nvd.nist.gov/vuln/detail/CVE-2024-1234",
+      "locationPath": "/usr/lib/x86_64-linux-gnu/libssl.so.3.0.7",
+      "resolutionReason": null,
+      "epssSeverity": "HIGH",
+      "epssPercentile": 0.95,
+      "epssProbability": 0.89,
+      "projects": [
+        {
+          "id": "proj-001",
+          "name": "Production API Infrastructure",
+          "description": "Core API services for customer-facing applications",
+          "businessUnit": "Engineering",
+          "riskProfile": {
+            "businessImpact": "HIGH",
+            "hasExposedAPI": true
+          }
+        }
+      ],
+      "vulnerableAsset": {
+        "id": "vm-instance-001",
+        "type": "VIRTUAL_MACHINE",
+        "name": "prod-web-server-01",
+        "region": "us-east-1",
+        "cloudProviderURL": "https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:instanceId=i-0123456789abcdef0",
+        "cloudPlatform": "AWS",
+        "status": "RUNNING",
+        "subscriptionName": "Production AWS Account",
+        "subscriptionExternalId": "123456789012",
+        "subscriptionId": "sub-aws-prod-001",
+        "ipAddresses": [
+          "10.0.1.45",
+          "52.23.45.67"
+        ]
+      }
+    },
+    {
+      "id": "vuln-cve-2023-9876",
+      "portalUrl": "https://app.wiz.io/vulnerabilities/vuln-cve-2023-9876",
+      "name": "CVE-2023-9876",
+      "CVEDescription": "SQL injection vulnerability in PostgreSQL client library allowing authenticated users to execute arbitrary SQL commands",
+      "CVSSSeverity": "HIGH",
+      "score": 8.1,
+      "exploitabilityScore": 2.8,
+      "impactScore": 5.3,
+      "dataSourceName": "NVD",
+      "hasExploit": false,
+      "hasCisaKevExploit": false,
+      "status": "IN_PROGRESS",
+      "vendorSeverity": "HIGH",
+      "firstDetectedAt": "2024-01-08T14:20:00Z",
+      "lastDetectedAt": "2024-01-15T10:30:00Z",
+      "resolvedAt": null,
+      "description": "SQL injection flaw in PostgreSQL client libraries. Requires authenticated access but allows privilege escalation.",
+      "remediation": "Update libpq to version 15.2 or apply security patch from vendor",
+      "detailedName": "PostgreSQL Client Library SQL Injection",
+      "version": "15.1",
+      "fixedVersion": "15.2",
+      "detectionMethod": "PACKAGE_SCANNER",
+      "link": "https://nvd.nist.gov/vuln/detail/CVE-2023-9876",
+      "locationPath": "/usr/lib/x86_64-linux-gnu/libpq.so.5",
+      "resolutionReason": null,
+      "epssSeverity": "MEDIUM",
+      "epssPercentile": 0.72,
+      "epssProbability": 0.45,
+      "projects": [
+        {
+          "id": "proj-003",
+          "name": "Database Infrastructure",
+          "description": "PostgreSQL database cluster and supporting services",
+          "businessUnit": "Data Engineering",
+          "riskProfile": {
+            "businessImpact": "HIGH",
+            "hasExposedAPI": false
+          }
+        }
+      ],
+      "vulnerableAsset": {
+        "id": "db-instance-002",
+        "type": "VIRTUAL_MACHINE",
+        "name": "prod-db-primary-01",
+        "region": "us-east-1",
+        "cloudProviderURL": "https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:instanceId=i-abcdef0123456789",
+        "cloudPlatform": "AWS",
+        "status": "RUNNING",
+        "subscriptionName": "Production AWS Account",
+        "subscriptionExternalId": "123456789012",
+        "subscriptionId": "sub-aws-prod-001",
+        "ipAddresses": [
+          "10.0.2.89"
+        ]
+      }
+    }
+  ],
+  "assets": [
+    {
+      "id": "asset-s3-bucket-001",
+      "name": "prod-customer-data-bucket",
+      "type": "S3_BUCKET",
+      "subscriptionName": "Production AWS Account",
+      "graphEntity": {
+        "id": "graph-s3-001",
+        "name": "prod-customer-data-bucket",
+        "type": "S3_BUCKET",
+        "firstSeen": "2023-06-01T00:00:00Z",
+        "lastSeen": "2024-01-15T12:00:00Z",
+        "properties": {
+          "status": "ACTIVE",
+          "nativeType": "AWS::S3::Bucket",
+          "cloudPlatform": "AWS",
+          "cloudProviderURL": "https://s3.console.aws.amazon.com/s3/buckets/prod-customer-data-bucket"
+        },
+        "projects": [
+          {
+            "id": "proj-004",
+            "name": "Customer Data Platform",
+            "description": "Storage and processing of customer information",
+            "businessUnit": "Engineering",
+            "riskProfile": {
+              "businessImpact": "CRITICAL",
+              "hasExposedAPI": false
+            }
+          }
+        ],
+        "technologies": [
+          {
+            "name": "AWS S3",
+            "description": "Object storage service",
+            "risk": "LOW",
+            "propertySections": []
+          }
+        ]
+      }
+    }
+  ]
+}
